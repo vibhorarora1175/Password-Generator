@@ -1,0 +1,580 @@
+/* Universal reset and box model */
+*,
+*::after,
+*::before {
+    margin: 0;                 /* Remove all default margin */
+    padding: 0;                /* Remove all default padding */
+    box-sizing: border-box;    /* Include padding and border in element's total width/height */
+    font-family: 'League Spartan', sans-serif; /* Set global font family */
+}
+
+/* Root variables for color scheme and design */
+:root {
+    --dk-violet: hsl(268, 75%, 9%); /* Dark violet for background colors */
+    --lt-violet: hsl(268, 47%, 21%); /* Light violet for slider background */
+    --lt-violet2: hsl(281, 89%, 26%); /* Slightly lighter violet for accents */
+    --vb-violet: hsl(285, 91%, 52%); /* Violet for primary accents */
+    --vb-violet2: hsl(290, 70%, 36%); /* Darker violet for secondary accents */
+    --vb-yellow: hsl(52, 100%, 62%); /* Yellow for highlights */
+    --pl-white: hsl(0, 0%, 100%); /* Pure white for text and backgrounds */
+    --vb-cyan: hsl(176, 100%, 44%); /* Cyan for checkboxes and highlights */
+    --vb-cyan2: hsl(177, 92%, 70%); /* Lighter cyan for softer accents */
+    --dk-text: hsl(198, 20%, 13%); /* Dark text for readability */
+}
+
+/* Body styling: center the content and add background gradient */
+body {
+    width: 100vw;               /* Full viewport width */
+    height: 100vh;              /* Full viewport height */
+    display: flex;              /* Flexbox layout */
+    flex-direction: column;     /* Stack items vertically */
+    align-items: center;        /* Horizontally center items */
+    justify-content: center;    /* Vertically center items */
+    background: linear-gradient(231deg, rgba(22, 6, 40, 1) 0%, rgba(52, 28, 79, 1) 50%, rgba(88, 7, 125, 1) 100%); /* Gradient background */
+}
+
+/* Container with responsive width */
+.container {
+    width: 90%;                 /* 90% of the viewport width */
+    max-width: 450px;           /* Max width of 450px */
+}
+
+/* Heading styling */
+h1 {
+    color: var(--pl-white);     /* White text */
+    opacity: 0.75;              /* Slightly transparent */
+    text-transform: uppercase;  /* Uppercase letters */
+    letter-spacing: 2px;        /* Spaced-out letters */
+    text-align: center;         /* Center text horizontally */
+    line-height: 1.2;           /* Line height for better readability */
+}
+
+/* Input container styling */
+.display-content {
+    position: relative;         /* Needed for absolute positioning of elements inside */
+    background-color: var(--dk-violet); /* Dark violet background */
+    border-radius: 1rem;        /* Rounded corners */
+    border-bottom: 0.35rem solid var(--vb-violet2); /* Violet border at the bottom */
+    margin: 1rem 0;             /* Margin between elements */
+    padding-top: 0.35rem;       /* Padding for top */
+}
+
+/* Text input field styling */
+.display {
+    width: 100%;                /* Full width */
+    background-color: transparent; /* Transparent background */
+    outline: none;              /* No outline */
+    border: none;               /* No border */
+    padding: 1.15rem 1rem;      /* Padding for spacing */
+    color: var(--vb-yellow);    /* Yellow text color */
+    font-weight: 600;           /* Bold text */
+    font-size: 1.5rem;          /* Font size */
+    line-height: 30px;          /* Line height for text spacing */
+    letter-spacing: 1px;        /* Slight letter spacing */
+    padding-right: 3.25rem;     /* Extra space on the right for button */
+}
+
+/* Placeholder styling */
+.display::placeholder {
+    position: absolute;         /* Absolutely position placeholder text */
+    top: 50%;                    /* Vertically center */
+    left: 1.5rem;                /* Slight space from the left */
+    font-size: 1.5rem;           /* Placeholder font size */
+    line-height: 30px;           /* Line height to match input text */
+    color: var(--vb-yellow);     /* Yellow placeholder text */
+    opacity: 0.65;               /* Slightly transparent */
+    text-transform: uppercase;  /* Uppercase letters for placeholder */
+    transform: translateY(-50%); /* Vertically center using transform */
+}
+
+/* Button inside display content */
+.display-content button {
+    position: absolute;         /* Absolutely position the button */
+    top: 50%;                    /* Vertically center */
+    right: 1.5rem;               /* Slight space from the right */
+    transform: translateY(-50%); /* Vertically center using transform */
+}
+
+/* Input container with padding */
+.input-container {
+    width: 100%;                /* Full width */
+    background-color: var(--dk-violet); /* Dark violet background */
+    border-radius: 1rem;        /* Rounded corners */
+    border-bottom: 0.35rem solid var(--vb-violet2); /* Violet border at the bottom */
+    padding: 2rem;              /* Padding for the container */
+}
+
+/* Length container with flexbox */
+.length-container {
+    display: flex;              /* Flexbox layout */
+    justify-content: space-between; /* Space out children */
+    align-items: center;        /* Vertically center items */
+}
+
+/* Length container text styles */
+.length-container p:nth-child(1) {
+    color: var(--pl-white);     /* White text */
+    font-size: 1.5rem;          /* Font size */
+}
+
+.length-container p:nth-child(2) {
+    color: var(--vb-yellow);    /* Yellow text */
+    font-size: 1.5rem;          /* Font size */
+}
+
+/* Strength container layout */
+.strength-container {
+    display: flex;              /* Flexbox layout */
+    justify-content: space-between; /* Space out children */
+    align-items: center;        /* Vertically center items */
+    margin-top: 1.75rem;         /* Top margin */
+    margin-bottom: 2rem;        /* Bottom margin */
+}
+
+/* Strength container text styles */
+.strength-container p {
+    color: var(--pl-white);     /* White text */
+    font-size: 1.5rem;          /* Font size */
+}
+
+/* Indicator for strength container */
+.strength-container div {
+    border-radius: 50%;         /* Circle shape */
+    width: 1.5rem;              /* Width of the circle */
+    height: 1.5rem;             /* Height of the circle */
+}
+
+/* Indicator styling */
+.indicator {
+    width: 1.5rem;              /* Width of the indicator circle */
+    height: 1.5rem;             /* Height of the indicator circle */
+    border-radius: 50%;         /* Circle shape */
+}
+
+/* Generate button styling */
+.generateBtn {
+    width: 100%;                /* Full width */
+    padding: 1rem 0;            /* Vertical padding */
+    background-color: var(--vb-violet); /* Violet background */
+    text-align: center;         /* Center text */
+    border-radius: 0.75rem;     /* Rounded corners */
+    border-bottom: 0.35rem solid var(--vb-yellow); /* Yellow border at the bottom */
+    text-transform: uppercase;  /* Uppercase text */
+    letter-spacing: 1px;        /* Letter spacing */
+    color: var(--vb-yellow);    /* Yellow text */
+    font-weight: 600;           /* Bold text */
+    font-size: 1.25rem;         /* Font size */
+}
+
+/* Checkbox and label layout */
+.check {
+    display: flex;              /* Flexbox layout */
+    align-items: center;        /* Center items vertically */
+    gap: 0 1rem;                /* Space between items */
+    margin: 1rem 0;             /* Margin between checkboxes */
+}
+
+/* Checkbox input styling */
+.check input {
+    appearance: none;           /* Remove default checkbox styles */
+    width: 20px;                 /* Set width */
+    height: 20px;                /* Set height */
+    border: 1px solid var(--vb-cyan); /* Cyan border */
+    cursor: pointer;            /* Pointer cursor */
+    position: relative;          /* Position relative for before pseudo-element */
+    border-radius: 0.35rem;      /* Rounded corners */
+}
+
+/* Checked state of checkbox */
+.check input:checked {
+    background-color: var(--vb-cyan); /* Cyan background when checked */
+}
+
+/* Checkmark when checked */
+.check input:checked::before {
+    content: '✓';               /* Display checkmark */
+    position: absolute;         /* Absolute positioning */
+    color: var(--dk-text);      /* Dark text for checkmark */
+    font-size: 1.05rem;         /* Font size for checkmark */
+    font-weight: 600;           /* Bold checkmark */
+    left: 50%;                  /* Center horizontally */
+    top: -3.5px;                /* Position above center */
+    transform: translateX(-50%); /* Center checkmark horizontally */
+}
+
+/* Label for checkboxes */
+.check label {
+    color: var(--pl-white);     /* White text */
+    font-size: 1.25rem;         /* Font size */
+    letter-spacing: 0.75px;     /* Letter spacing */
+}
+
+/* Slider (range input) styling */
+.slider {
+    appearance: none;           /* Remove default slider appearance */
+    width: 100%;                /* Full width */
+    height: 0.75rem;            /* Slider height */
+    cursor: pointer;           /* Pointer cursor */
+    background-color: var(--lt-violet); /* Light violet background */
+    border-radius: 1rem;        /* Rounded corners */
+    margin-top: 2rem;           /* Margin above slider */
+    margin-bottom: 1.5rem;      /* Margin below slider */
+    background-image: linear-gradient(var(--vb-violet), var(--vb-violet)); /* Gradient background */
+    background-repeat: no-repeat; /* Prevent repeating gradient */
+    border: none;               /* Remove default border */
+    outline: none;              /* Remove outline */
+}
+
+/* Slider thumb (the draggable part) styling */
+.slider::-webkit-slider-thumb {
+    position: relative;         /* Needed for positioning */
+    appearance: none;           /* Remove default appearance */
+    height: 2rem;               /* Thumb height */
+    width: 2rem;                /* Thumb width */
+    border-radius: 50%;         /* Circle shape */
+    background-color: var(--vb-yellow); /* Yellow thumb */
+    cursor: pointer;           /* Pointer cursor */
+    margin-top: -3px;           /* Center thumb vertically */
+    box-shadow: 0px 0px 20px 0px rgba(255, 229, 61, 0.504); /* Box shadow for glow effect */
+    transition: all 100ms ease-in; /* Smooth transition for thumb */
+}
+
+/* Focus state for the slider */
+.slider:focus {
+    outline: 3px solid var(--vb-yellow); /* Yellow outline when focused */
+}
+
+/* Hover state for the slider thumb */
+.slider::-webkit-slider-thumb:hover {
+    outline: 2px solid var(--vb-yellow); /* Yellow outline on hover */
+    background-color: var(--dk-violet);  /* Dark violet thumb on hover */
+    box-shadow: 0px 0px 25px 5px rgba(255, 229, 61, 0.81); /* More intense shadow on hover */
+}
+
+/* Button to copy text (transparent with no border) */
+.copybtn {
+    background-color: transparent; /* Transparent background */
+    border: none;                   /* No border */
+    outline: none;                  /* No outline */
+}
+
+/* Tooltip for showing additional information */
+.tooltip {
+    position: absolute;             /* Absolutely position tooltip */
+    background-color: var(--vb-violet2); /* Light violet background */
+    color: var(--vb-yellow);        /* Yellow text */
+    font-size: 1.25rem;             /* Font size */
+    top: -35px;                     /* Position above the element */
+    left: -25px;                    /* Position left of the element */
+    padding: 5px 10px;              /* Padding inside the tooltip */
+    border-radius: 1rem;            /* Rounded corners */
+    opacity: 0;                     /* Hidden by default */
+    transform: scale(0);            /* Scale to 0 (invisible) */
+    transform-origin: bottom;      /* Scale from bottom */
+    transition: all 250ms ease-in-out; /* Smooth transition for showing/hiding */
+}
+
+/* Active tooltip state (when shown) */
+.tooltip.active {
+    opacity: 1;                    /* Fully opaque */
+    transform: scale(1);           /* Scale to normal size */
+}
+
+/* Responsive styling for small screens (max width 768px) */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;                /* 95% width on small screens */
+        max-width: 100%;           /* Max width of 100% */
+    }
+
+    .input-container {
+        padding: 1rem;             /* Reduce padding */
+    }
+
+    .slider {
+        height: 0.5rem;            /* Smaller slider */
+    }
+
+    .display {
+        font-size: 1.25rem;        /* Smaller font size */
+    }
+}
+
+
+
+/* ///////// code with no comments/////// */
+
+/* *,
+*::after,
+*::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'League Spartan', sans-serif;
+}
+
+:root {
+    --dk-violet: hsl(268, 75%, 9%);
+    --lt-violet: hsl(268, 47%, 21%);
+    --lt-violet2: hsl(281, 89%, 26%);
+    --vb-violet: hsl(285, 91%, 52%);
+    --vb-violet2: hsl(290, 70%, 36%);
+    --vb-yellow: hsl(52, 100%, 62%);
+    --pl-white: hsl(0, 0%, 100%);
+    --vb-cyan: hsl(176, 100%, 44%);
+    --vb-cyan2: hsl(177, 92%, 70%);
+    --dk-text: hsl(198, 20%, 13%);
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(231deg, rgba(22, 6, 40, 1) 0%,rgba(52, 28, 79, 1) 50%,rgba(88, 7, 125, 1) 100%);
+}
+
+.container{
+    width: 90%;
+    max-width: 450px;
+
+}
+
+h1{
+    color: var(--pl-white);
+    opacity: 0.75;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.display-content{
+    position: relative;
+    background-color: var(--dk-violet);
+    border-radius: 1rem;
+    border-bottom: 0.35rem solid var(--vb-violet2);
+    margin: 1rem 0;
+    padding-top: 0.35rem;
+}
+
+.display{
+    width: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding: 1.15rem 1rem;
+    color: var(--vb-yellow);
+    font-weight: 600;
+    font-size: 1.5rem ;
+    line-height: 30px;
+    letter-spacing: 1px;
+    padding-right: 3.25rem;
+}
+
+.display::placeholder{
+    position: absolute;
+    top: 50%;
+    left: 1.5rem;
+    font-size: 1.5rem;
+    line-height: 30px;
+    color: var(--vb-yellow);
+    opacity: 0.65;
+    text-transform: uppercase;
+    transform: translateY(-50%);
+}
+
+.display-content button{
+    position: absolute;
+    top: 50%;
+    right: 1.5rem;
+    transform: translateY(-50%);
+}
+
+.input-container{
+    width: 100%;
+    background-color: var(--dk-violet);
+    border-radius: 1rem;
+    border-bottom: 0.35rem solid var(--vb-violet2);
+    padding: 2rem;
+}
+
+.length-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.length-container p:nth-child(1){
+    color: var(--pl-white);
+    font-size:1.5rem ;
+}
+
+.length-container p:nth-child(2){
+    color: var(--vb-yellow);
+    font-size: 1.5rem;
+}
+
+.strength-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.75rem;
+    margin-bottom: 2rem;
+}
+
+.strength-container p{
+    color: var(--pl-white);
+    font-size:1.5rem ;
+}
+
+.strength-container div{
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+
+}
+
+.indicator{
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+}
+
+.generateBtn{
+    width: 100%;
+    padding: 1rem 0;
+    background-color: var(--vb-violet);
+    text-align: center;
+    border-radius: 0.75rem;
+    border-bottom: 0.35rem solid var(--vb-yellow);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--vb-yellow);
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.check{
+    display: flex;
+    align-items: center;
+    gap: 0 1rem;
+    margin: 1rem 0;
+}
+
+.check input{
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--vb-cyan);
+    cursor: pointer;
+    position: relative;
+    border-radius: 0.35rem;
+}
+
+.check input:checked {
+    background-color: var(--vb-cyan);
+}
+
+.check input:checked::before{
+    content:'✓';
+    position: absolute;
+    color: var(--dk-text);
+    font-size:1.05rem ;
+    font-weight: 600;
+    left: 50%;
+    top: -3.5px;
+    transform: translateX(-50%);
+    
+}
+
+.check label{
+    color:var(--pl-white);
+    font-size: 1.25rem;
+    letter-spacing: 0.75px;
+}
+
+.slider{
+    appearance: none;
+    width: 100%;
+    height: 0.75rem;
+    cursor: pointer;
+    background-color: var(--lt-violet);
+    border-radius: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    background-image: linear-gradient(var(--vb-violet),var(--vb-violet));
+    background-repeat: no-repeat;
+    border: none;
+    outline: none;
+}
+
+.slider::-webkit-slider-thumb{
+    position: relative;
+    appearance: none;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    background-color: var(--vb-yellow);
+    cursor: pointer;
+    margin-top: -3px;
+    box-shadow: 0px 0px 20px 0px rgba(255, 229, 61, 0.504);
+    transition: all 100ms ease-in;
+}
+
+.slider:focus{
+    outline: 3px solid var(--vb-yellow);
+}
+
+.slider::-webkit-slider-thumb:hover{
+    outline: 2px solid var(--vb-yellow);
+    background-color: var(--dk-violet);
+    box-shadow: 0px 0px 25px 5px rgba(255,229,61,0.81);
+}
+
+.copybtn{
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.tooltip{
+    position: absolute;
+    background-color: var(--vb-violet2);
+    color: var(--vb-yellow);
+    font-size: 1.25rem;
+    top: -35px;
+    left: -25px;
+    padding: 5px 10px;
+    border-radius: 1rem;
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: bottom;
+    transition: all 250ms ease-in-out;
+}
+
+.tooltip.active{
+    opacity: 1;
+    transform: scale(1);
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        max-width: 100%;
+    }
+
+    .input-container {
+        padding: 1rem;
+    }
+
+    .slider {
+        height: 0.5rem;
+    }
+
+    .display {
+        font-size: 1.25rem;
+    }
+} */
